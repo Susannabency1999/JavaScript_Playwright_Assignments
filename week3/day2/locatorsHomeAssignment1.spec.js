@@ -1,0 +1,22 @@
+import {test, expect} from "@playwright/test";
+test("Learn Xpath", async ({ page }) => {
+  await page.goto("https://login.salesforce.com");
+  await page.locator("//input[@type='email']").fill("dilipkumar.rajendran@testleaf.com");
+  await page.locator("//input[@class='button r4 wide primary']").click();
+  await page.locator("//input[@onkeypress='checkCaps(event)']").fill("TestLeaf@2025");
+  await page.locator("//form[@name='login']//input[@type='submit']").click();
+  await page.locator("//button[@title='App Launcher']").click();
+  await page.waitForTimeout(3000);
+  await page.locator("//button[text()='View All']").click();
+  await page.waitForTimeout(5000);
+  await page.locator("//one-app-launcher-app-tile[@data-name='Sales']").click();
+  await page.locator("//one-app-nav-bar-item-root[@role='listitem']//span[text()='Leads']").click();
+  await page.locator("//div[@title='New']").click();
+  await page.locator("//button[@aria-label='Salutation']").click();
+  await page.locator("//input[@name='lastName']").fill("Smith");
+  await page.locator("//input[@name='Company']").fill("Smith pvt ltd");
+  await page.locator("//button[@name='SaveEdit']").click();
+  const leadName = page.locator("//lightning-formatted-name[text()='Smith']");
+  await expect(leadName).toBeVisible({ timeout: 30000 });
+  console.log("The Company Lead's name is visible");
+ });

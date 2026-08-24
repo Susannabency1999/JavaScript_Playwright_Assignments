@@ -1,0 +1,22 @@
+import {test, expect} from "@playwright/test";
+test("Learn Xpath", async ({ page }) => {
+  await page.goto("https://login.salesforce.com");
+  await page.locator("//input[@type='email']").fill("dilipkumar.rajendran@testleaf.com");
+  await page.locator("//input[@id='Login']").click();
+  await page.locator("//input[@name='pw']").fill("TestLeaf@2025");
+  await page.locator("//input[@id='Login']").click();
+  await page.locator("//button[@title='App Launcher']").click();
+  await page.locator("//button[@aria-label='View All Applications']").click();
+  await page.locator("//div[@type='search']//input[@type='search']").fill('individuals');
+  await page.locator("//p[normalize-space()='Individuals']").click();
+  await page.locator("//input[@name='Individual-search-input']").fill("Smith");
+  await page.keyboard.press("Enter");
+  await page.getByRole('button', { name: 'Show Actions' }).first().click();
+  await page.getByRole('menuitem', { name: 'Edit' }).click();
+  await page.locator("//span[text()='Salutation']/ancestor::div[contains(@class, 'uiInput')]//a[@role='button']").click();
+  await page.locator("//a[@title='Mr.']").click();
+  await page.locator("//input[@placeholder='First Name']").fill("Ronald");
+  await page.locator("//span[text()='Save']").click();
+  await expect(page.locator("//span[text()='Lawrence Smith']")).toBeVisible();
+  console.log("The Firstname of the individual is added successfully");
+});
